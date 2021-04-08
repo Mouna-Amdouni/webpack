@@ -233,6 +233,7 @@ $this->entityManager->persist($association);
         }
 
         return $this->redirectToRoute('association_index');
+
     }
 
 ///**
