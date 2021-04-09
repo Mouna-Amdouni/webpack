@@ -99,7 +99,7 @@ private $entityManager;
             ->add('titre',
                 TextType::class, [
                     'required' => true,
-                    'label' => "Entrez le nom de votre association",
+                    'label' => "Entrezzzzzz le nom de votre association",
                     'attr' => ['class' => 'form-control']
                 ])
             ->add('siege',

@@ -91,4 +91,5 @@ class OpportuniteController extends AbstractController
 
         return $this->redirectToRoute('opportunite_index');
     }
+    
 }
