@@ -7,7 +7,7 @@
     <div class="col-md-3 left_col menu_fixed">
         <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-                <a href="{{ path('app_admin_index') }}" class="site_title"><i class="fa fa-paw"></i> <span>Associations<br/> pour tous</span></a>
+                <a href="{{ path('app_admin_index') }}" class="site_title"><i class="fa fa-paw"></i> <span>Associations pour </br> tous</span></a>
             </div>
 
             <div class="clearfix"></div>
@@ -61,6 +61,15 @@
                                     <li><a href="{{ path('association_index') }}">{{ "backend.menu.manage"|trans }}</a></li>
                                 </ul>
                             </li>
+
+                        {% endif %}
+
+                         {% if is_granted("ROLE_SUPERUSER") %}
+                        <li><a><i class="fa fa-diamond"></i> {{ "backend.menu.opportunity"|trans }} <span class="fa fa-chevron-down"></span></a>
+                            <ul class="nav child_menu">
+                                <li><a href="{{ path('opportunite_index') }}">{{ "backend.menu.manage"|trans }}</a></li>
+                            </ul>
+                        </li>
 
                         {% endif %}
                         {% if is_granted("ROLE_CONSULTANT") %}

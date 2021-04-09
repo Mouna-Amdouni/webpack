@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Opportunite index{% endblock %}
+
+{% block body %}
+    <h1>Opportunite index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Lanceur</th>
+                <th>Logo</th>
+                <th>Titre</th>
+                <th>Type</th>
+                <th>Date_deb</th>
+                <th>Date_expir</th>
+                <th>Region</th>
+                <th>Description</th>
+                <th>Date_publication</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for opportunite in opportunites %}
+            <tr>
+                <td>{{ opportunite.id }}</td>
+                <td>{{ opportunite.lanceur }}</td>
+                <td>{{ opportunite.logo }}</td>
+                <td>{{ opportunite.titre }}</td>
+                <td>{{ opportunite.type }}</td>
+                <td>{{ opportunite.dateDeb ? opportunite.dateDeb|date('Y-m-d') : '' }}</td>
+                <td>{{ opportunite.dateExpir ? opportunite.dateExpir|date('Y-m-d') : '' }}</td>
+                <td>{{ opportunite.region }}</td>
+                <td>{{ opportunite.description }}</td>
+                <td>{{ opportunite.datePublication ? opportunite.datePublication|date('Y-m-d') : '' }}</td>
+                <td>
+                    <a href="{{ path('opportunite_show', {'id': opportunite.id}) }}">show</a>
+                    <a href="{{ path('opportunite_edit', {'id': opportunite.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="11">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('opportunite_new') }}">Create new</a>
+{% endblock %}

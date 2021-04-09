@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Opportunite{% endblock %}
+
+{% block body %}
+    <h1>Opportunite</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ opportunite.id }}</td>
+            </tr>
+            <tr>
+                <th>Lanceur</th>
+                <td>{{ opportunite.lanceur }}</td>
+            </tr>
+            <tr>
+                <th>Logo</th>
+                <td>{{ opportunite.logo }}</td>
+            </tr>
+            <tr>
+                <th>Titre</th>
+                <td>{{ opportunite.titre }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ opportunite.type }}</td>
+            </tr>
+            <tr>
+                <th>Date_deb</th>
+                <td>{{ opportunite.dateDeb ? opportunite.dateDeb|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Date_expir</th>
+                <td>{{ opportunite.dateExpir ? opportunite.dateExpir|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Region</th>
+                <td>{{ opportunite.region }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ opportunite.description }}</td>
+            </tr>
+            <tr>
+                <th>Date_publication</th>
+                <td>{{ opportunite.datePublication ? opportunite.datePublication|date('Y-m-d') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('opportunite_index') }}">back to list</a>
+
+    <a href="{{ path('opportunite_edit', {'id': opportunite.id}) }}">edit</a>
+
+    {{ include('opportunite/_delete_form.html.twig') }}
+{% endblock %}

@@ -20,6 +20,7 @@ backend:
     blog: Blog
     history: Historique
     association: Association
+    opportunity : Opportunité
   role:
     choice_role: Choisissez un role
   user:
