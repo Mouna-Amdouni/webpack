@@ -31,7 +31,7 @@ class NewTopicType extends AbstractType
                 ->add('name', 
                     TextType::class, [
                     'required' => true,
-                    'label' => 'Nom de la Forum ',
+                    'label' => 'Tapez votre sujet à poser',
                     'attr' => ['class' => 'form-control']
                 ])
 
@@ -42,7 +42,7 @@ class NewTopicType extends AbstractType
                         'cols' => "45"
                     ],
                     'required' => true,
-                    'label' => 'écrire un commentaire'
+                    'label' => 'ecrivez un message'
                 ])
 
                

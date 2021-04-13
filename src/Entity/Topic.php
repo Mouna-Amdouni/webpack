@@ -144,5 +144,43 @@ class Topic
 
         return $this;
     }
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $deleted;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $valid;
+
+    public function getDeleted(): ?bool
+    {
+        return $this->deleted;
+    }
+
+    public function setDeleted(?bool $deleted): self
+    {
+        $this->deleted = $deleted;
+
+        return $this;
+    }
+
+    public function getValid(): ?bool
+    {
+        return $this->valid;
+    }
+
+    public function setValid(?bool $valid): self
+    {
+        $this->valid = $valid;
+
+        return $this;
+    }
+    public function isValid(): ?bool
+    {
+        return $this->valid;
+    }
+
 
 }

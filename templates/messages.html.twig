@@ -1,5 +1,5 @@
-{% extends 'base.html.twig' %}
-{% block body %}
+{% extends "admin/bars.html.twig" %}
+{% block contenpage %}
 {#{% for m in messages %}#}
 
 
@@ -13,13 +13,15 @@
     <section class="msger">
         <header class="msger-header">
             <div class="msger-header-title">
-                <i class="fas fa-comment-alt"></i> SimpleChat
+                <i class="fas fa-comment-alt"></i> Notre consultant est offert par notre administration! merci de le(a) respecter
             </div>
             <div class="msger-header-options">
                 <span><i class="fas fa-cog"></i></span>
             </div>
         </header>
+
         {% for m in messages %}
+
         <main class="msger-chat">
 {#            {% if m.idTopic.id is same as topic.id and app.user is same as m.idUser %}#}
 {#            {% if m.idTopic.id is same as topic.id and app.user is same as m.idUser %}#}
@@ -28,9 +30,10 @@
 {#    and (app.user.id is same as topic.author.id) and (topic.id is same as m.idTopic.id) and (m.idUser.id is same as topic.author.id) %}#}
             <div class="msg left-msg">
                 <div
-                        class="msg-img"
-                        style="background-image: url(https://image.flaticon.com/icons/svg/327/327779.svg)"
-                ></div>
+                >
+                    {#                        style="background-image: url(https://image.flaticon.com/icons/svg/145/145867.svg)"#}
+                    <img class="msg-img" src=" {{ asset('uploads/images/'  ~ m.idUser.logo) }}" alt="Awesome Image">
+                </div>
 
                 <div class="msg-bubble">
                     <div class="msg-info">
@@ -48,9 +51,10 @@
             {% if (app.user is same as m.idUser) and (topic.id is same as m.idTopic.id) %}
             <div class="msg right-msg">
                 <div
-                        class="msg-img"
-                        style="background-image: url(https://image.flaticon.com/icons/svg/145/145867.svg)"
-                ></div>
+                        >
+{#                        style="background-image: url(https://image.flaticon.com/icons/svg/145/145867.svg)"#}
+                    <img class="msg-img" src=" {{ asset('uploads/images/'  ~ m.idUser.logo) }}" alt="Awesome Image">
+                </div>
 
                 <div class="msg-bubble">
                     <div class="msg-info">
@@ -72,10 +76,17 @@
                                 <p class="no-form">Vous devez être connecté pour écrire un message</p>
                             </div>
 
+
+                        {% elseif is_granted('ROLE_ADMIN')   %}
+                            <br/><br/>
+                            <h5 style="text-align: center" >Desolé notre Admin vous ne pouvez pas particper a cette discussion :(</h5>
+                        {% elseif not is_granted('ROLE_ADMIN') and topic.valid == false   %}
+                            <br/><br/>
+<h5 style="text-align: center">Cette conversation est desactivée par notre administration</h5>
                         {% else %}
                             <div id="new-message-form">
                                 {{ form_start(form) }}
-                                <label for="new_message_content" class="required">NOUVEAU commentaire: {{ topic.name }}</label>
+                                <label for="new_message_content" class="required">repondre pour le sujet: <strong>{{ topic.name }}</strong></label>
                                 {{ form_errors(form) }}
                                 {{ form_rest(form) }}
                                 {{ form_end(form) }}

@@ -54,18 +54,20 @@ class ParamsUserController extends BaseController
         $form = $this->createForm(EditProfile::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-//            $file=$form->get('logo')->getData();
-//            $fileName=md5(uniqid()).'.'.$file->guessExtension();
-//
-//            try {
-//                $file->move(
-//                    $this->getParameter('images_directory'),
-//                    $fileName
-//                );
-//            } catch (FileException $e) {
-//                // ... handle exception if something happens during file upload
-//            }
-//            $association->setLogo($fileName);
+
+
+            $file=$form->get('logo')->getData();
+            $fileName=md5(uniqid()).'.'.$file->guessExtension();
+
+            try {
+                $file->move(
+                    $this->getParameter('images_directory'),
+                    $fileName
+                );
+            } catch (FileException $e) {
+                // ... handle exception if something happens during file upload
+            }
+            $user->setLogo($fileName);
 
 
 
@@ -73,7 +75,7 @@ class ParamsUserController extends BaseController
             $this->entityManager->flush();
             $this->addFlash("success","compte modifié");
 
-            return $this->redirectToRoute('index');
+            return $this->redirectToRoute('indexx');
         }
 
         return $this->render("admin/user/editprofile.html.twig", ['editProfileform'=>$form->createView(),

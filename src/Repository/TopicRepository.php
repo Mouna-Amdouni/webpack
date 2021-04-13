@@ -2,12 +2,13 @@
 
 namespace App\Repository;
 
+use App\Entity\Association;
 use App\Entity\Topic;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
-
 /**
  * @method Topic|null find($id, $lockMode = null, $lockVersion = null)
  * @method Topic|null findOneBy(array $criteria, array $orderBy = null)
@@ -16,12 +17,14 @@ use Doctrine\ORM\Query\Expr\Join;
  */
 class TopicRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private $entityManager;
+
+
+    public function __construct(ManagerRegistry $registry, EntityManagerInterface $entityManager)
     {
         parent::__construct($registry, Topic::class);
+        $this->entityManager = $entityManager;
     }
-
- 
 
     public function getTopicsData() {
        
@@ -33,5 +36,19 @@ class TopicRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
-  
+    public function changeValidite(Topic $topic){
+        if ($topic->isValid())
+            $topic->setValid(false);
+        else
+            $topic->setValid(true);
+        $this->entityManager->persist($topic);
+        $this->entityManager->flush();
+        return $topic;
+    }
+    public function delete(Topic $topic){
+        $topic->setDeleted(true);
+        $this->entityManager->persist($topic);
+        $this->entityManager->flush();
+        return $topic;
+    }
 }

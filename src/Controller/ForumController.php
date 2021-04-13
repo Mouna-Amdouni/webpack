@@ -2,7 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Association;
+use App\Entity\Categorie;
+use App\Repository\AssociationRepository;
 use App\Repository\UserRepository;
+use App\Services\UploadHelper;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -27,6 +32,19 @@ use App\Service\UserFunctions;
 
 class ForumController extends AbstractController
 {
+    private $topicRepository;
+    private $entityManager;
+    /**
+     * @var UploadHelper
+     */
+    private $uploadHelper;
+    public function __construct(TopicRepository $topicRepository, UploadHelper $uploadHelper ,EntityManagerInterface $entityManager)
+    {
+      $this->topicRepository=$topicRepository;
+        $this->entityManager = $entityManager;
+        $this->uploadHelper = $uploadHelper;
+
+    }
     /**
      * @Route("/forum", name="forum")
      */
@@ -76,7 +94,8 @@ $topics=$topicRepository->findAll();
             $topic->setAuthor($user);
 
             $topic->setCreationDate(date_create(date('Y-m-d')));
-            
+            $topic->setValid(true);
+            $topic->setDeleted(false);
 
             $manager->persist($topic);
             $manager->flush();
@@ -283,5 +302,66 @@ $topics=$topicRepository->findAll();
 //
 //        return $this->render('consultant/chats.html.twig',['topics'=>$topics]);
 //    }
+    /**
+     * @Route("/forum/groupaction",name="groupaction_forum")
+     * @IsGranted("ROLE_WRITER")
+     */
+    public function groupAction(Request $request){
+        $action = $request->get("action");
+        $ids = $request->get("ids");
+        $categories = $this->topicRepository->findBy(["id"=>$ids]);
+        if ($action=="desactiver" && $this->isGranted("ROLE_EDITORIAL")){
+            foreach ($categories as $categorie) {
+                $categorie->setValid(false);
+                $this->entityManager->persist($categorie);
+            }
+        }else if ($action=="activer" && $this->isGranted("ROLE_EDITORIAL")){
+            foreach ($categories as $categorie) {
+                $categorie->setValid(true);
+                $this->entityManager->persist($categorie);
+            }
+        }else if ($action=="supprimer" && $this->isGranted("ROLE_EDITORIAL")){
+            foreach ($categories as $categorie) {
+                $categorie->setDeleted(true);
+                $this->entityManager->persist($categorie);
+            }
+        }
+        else{
+            return $this->json(["message"=>"error"]);
+        }
+        $this->entityManager->flush();
+        return $this->json(["message"=>"success","nb"=>count($categories)]);
+    }
+
+    /**
+     * @Route("/AdminChat", name="adminchats", methods={"GET"})
+
+
+     */
+    public function indexChatAdmin(TopicRepository $topicRepository ): Response
+    {  $associations=$this->topicRepository->findAll();
+//        return $this->render("proprietaireAssociation/asoociation/associationform.html.twig", ['associationform'=>$form->createView(),
+
+        return $this->render('admin/chats/chats.html.twig', [
+            'chats' => $topicRepository->findAll(),
+        ]);
+    }
+
+    /**
+     * @Route("/chats/changevaliditee/{id}",name="chat_changeV",methods={"post"})
+     * @IsGranted("ROLE_SUPERUSER")
+     */
+    public function activate(Topic $topic){
+        $topic = $this->topicRepository->changeValidite($topic);
+        return $this->json(["message"=>"success","value"=>$topic->getValid()]);
+    }
+    /**
+     * @Route("/deleteT/{id}",name="deleteT")
+     * @IsGranted("ROLE_SUPERUSER")
+     */
+    public function deletet(Topic $topic ){
+        $topic = $this->topicRepository->delete($topic);
+        return $this->json(["message"=>"success","value"=>$topic->getDeleted()]);
+    }
 
 }

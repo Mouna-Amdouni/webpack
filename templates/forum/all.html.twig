@@ -1,8 +1,9 @@
 {% extends "admin/bars.html.twig" %}
 {% block contenpage %}
 <h1>bnj {{ app.user.id }}</h1>
+    <a href="{{ path('newTopic') }}"><span>Taper votre sujet ou bien votre probleme à poser</span></a>
 
-{% for t in topics  %}
+    {% for t in topics|filter(topics => not topics.deleted) %}
 
     {% if ( t.author is same  as app.user ) %}
         <td><a href="{{ path('topic', {'id': t.id}) }}"  >

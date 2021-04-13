@@ -194,4 +194,33 @@ class UserController extends BaseController
         $this->entityManager->flush();
         return $this->json(["message" => "success", "nb" => count($users)]);
     }
+
+    /**
+     * @Route("/changepass",name="changepass")
+     */
+    public function changePass(Request $request)
+    {
+        $user = $this->getUser();
+        $form = $this->createForm(ChangePwsdFormType::class, $user);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $password =  $form["justpassword"]->getData();
+            $newPassword = $form["newpassword"]->getData();
+
+            if ($this->passwordEncoder->isPasswordValid($user, $password)) {
+                $user->setPassword($this->passwordEncoder->encodePassword($user, $newPassword));
+            } else {
+                $this->addFlash("error","erreur!!!!!!!!!!");
+                return $this->render("admin/params/changeMdpForm.html.twig", ["passwordForm" => $form->createView()]);
+            }
+
+            $this->entityManager->persist($user);
+            $this->entityManager->flush();
+            $this->addFlash("success","votre mot de passe a ete bien modifié");
+            return $this->redirectToRoute("indexx");
+        }
+        return $this->render("admin/params/changeMdpForm.html.twig", ["passwordForm" => $form->createView()]);
+    }
+    
 }

@@ -114,6 +114,10 @@ class User implements UserInterface, EquatableInterface
      * @ORM\OneToMany(targetEntity=Message::class, mappedBy="idUser")
      */
     private $messages;
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $logo;
 
 
     public function __construct()
@@ -533,7 +537,17 @@ class User implements UserInterface, EquatableInterface
     }
 
 
+    public function getLogo(): ?string
+    {
+        return $this->logo;
+    }
 
+    public function setLogo(?string $logo): self
+    {
+        $this->logo = $logo;
+
+        return $this;
+    }
 
 
 }
