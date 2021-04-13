@@ -1,90 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        {% block metas %}
-            <meta charset="UTF-8">
-        {% endblock %}
-        <title>{% block title %}{{ "backend.global.welcome"|trans }}{% endblock %}</title>
+        <head>
+                <title>{% block title %}{{ "backend.global.welcome"|trans }}{% endblock %}</title>
+                {% block metas %}
+                        <meta charset="UTF-8">
+                {% endblock %}
+                
+                {% block stylesheets %}
+        
 
-        {% block stylesheets %}
-            <meta
-                    http-equiv="Content-Type" content="text/html; charset=UTF-8">
-            <!-- Meta, title, CSS, favicons, etc. -->
-            <meta charset="utf-8">
-            <meta http-equiv="X-UA-Compatible" content="IE=edge">
-            <meta
-                    name="viewport" content="width=device-width, initial-scale=1">
+                {% endblock %}
+       
+        </head>
 
-            <!-- Bootstrap -->
-            <link
-                    href="{{ asset('vendors/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
-            <!-- Font Awesome -->
-            <link
-                    href="{{ asset('vendors/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
-            <!-- NProgress -->
-            <link
-                    href="{{ asset('vendors/nprogress/nprogress.css') }}" rel="stylesheet">
-            <!-- Animate -->
-            <link
-                    href="{{ asset('vendors/animate.css/animate.css') }}" rel="stylesheet">
-            <!-- iCheck -->
-            <link
-                    href="{{ asset('vendors/iCheck/skins/flat/green.css') }}" rel="stylesheet">
-            <!-- Custom Theme Style -->
-            <link href="{{ asset('build/css/custom.min.css') }}" rel="stylesheet">
+    <body>
 
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">    
+<div class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
 
-            <link href="{{ asset('vendors/messenger.css') }}" rel="stylesheet">
+                    <div class="navbar-header">
+                        <button class="navbar-toggle" data-target="#mobile_menu" data-toggle="collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+                        <a href="{{path('index')}}" class="navbar-brand">Associations Pour Tous</a>
+                    </div>
 
-            <link href="{{ asset('vendors/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
+                    <div class="navbar-collapse collapse" id="mobile_menu">
+                        <ul class="nav navbar-nav">
+                            <li class="active"><a href="{{path('index')}}">Accueil</a></li>
+                            <li><a href="#" class="dropdown-toggle" data-toggle="dropdown">About Us <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">About Us One</a></li>
+                                    <li><a href="#">About Two</a></li>
+                                   
+                                </ul>
+                            </li>
+                            <li><a href="#">Associations</a></li>
+                            <li><a href="#">Jeunes Experts</a></li>
+                            <li><a href="#">Opportunités</a></li>
+                            
+                            <li><a href="#">Actualités</a></li>
+                            <li><a href="#"></a></li>
+                        </ul>
+                        
 
-        {% endblock %}
-        <style>
-body{
-    background-color: lightgray;
-}
-
-        </style>
-    </head>
-
-    <body {% block bodyclass %}class="" {% endblock %}>
-
-{#    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">#}
-{#        <a class="navbar-brand" href="{{ path('index') }}">Associations pour tous</a>#}
-{#        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">#}
-{#            <span class="navbar-toggler-icon"></span>#}
-{#        </button>#}
-{#<form class="form-inline my-2 my-lg-0">#}
-{#                <input class="form-control mr-sm-2" type="text" placeholder="Search">#}
-{#                <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>#}
-{#            </form>#}
-{#        <div class="collapse navbar-collapse" id="navbarColor01">#}
-{#            <ul class="navbar-nav mr-auto">#}
-{#                <li class="nav-item active">#}
-
-{#                    <a class="nav-link" href="{{ path('association_index_user') }}">Associations#}
-{#                        <span class="sr-only">(current)</span>#}
-{#                    </a>#}
-{#                </li>#}
-{#                <li class="nav-item">#}
-{#                    <a class="nav-link" href="{{ path('forumsall') }}">Voir vos messages</a>#}
-{#                </li>#}
-
-{#                <li class="nav-item" >#}
-{#                    <a class="nav-link" href="{{ path('register') }}">Inscription</a>#}
-{#                </li>#}
-{#                <li class="nav-item" >#}
-{#                    <a class="nav-link" href="{{ path('app_admin_users') }}">Se connecter</a>#}
-{#                </li>#}
-{#                {% if app.user %}#}
-{#                <li class="nav-item">#}
-{#                    <a class="nav-link" href="{{ path('userr_edit',{"id":app.user.id}) }}">Modifier votre compte</a>#}
-{#                </li>#}
-{#{% endif %}#}
-{#            </ul>#}
-
-{#        </div>#}
-{#    </nav>#}
+                        <ul class="nav navbar-nav navbar-right">
+                            
+                            <li><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-log-in"></span> Login / Sign Up <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{path('app_login')}}">Login</a></li>
+                                    <li><a href="{{path('register')}}">Sign Up</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 
 
@@ -100,7 +76,3 @@ body{
         {% block javascripts %}{% endblock %}
     </body>
 </html>
-
-
-
-
